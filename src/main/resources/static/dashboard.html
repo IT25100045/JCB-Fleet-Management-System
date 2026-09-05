@@ -293,6 +293,8 @@
             font-size: 11px;
 
             font-weight: 700;
+
+            cursor: default;
         }
 
         .healthy {
@@ -373,21 +375,58 @@
             height: 100%;
 
             border-radius: 20px;
+
+            transition: width 0.3s ease, background 0.3s ease;
         }
 
         .health-green {
-            width: 90%;
             background: #22c55e;
         }
 
         .health-yellow {
-            width: 65%;
             background: #f59e0b;
         }
 
         .health-red {
-            width: 30%;
             background: #ef4444;
+        }
+
+
+        /* ================= VEHICLE ACTIONS ================= */
+
+        .vehicle-actions {
+            margin-top: 16px;
+
+            display: flex;
+
+            gap: 10px;
+        }
+
+        .btn-small {
+            flex: 1;
+
+            padding: 9px 10px;
+
+            border-radius: 10px;
+
+            border: 1px solid #e5e7eb;
+
+            background: #f9fafb;
+
+            color: #374151;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: 0.15s;
+        }
+
+        .btn-small:hover {
+            background: #f3f4f6;
+            border-color: #d1d5db;
         }
 
 
@@ -413,10 +452,42 @@
             box-shadow: 0 5px 18px rgba(0,0,0,0.06);
         }
 
-        .detail-card h2 {
-            font-size: 18px;
+        .detail-card-header {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
 
             margin-bottom: 17px;
+        }
+
+        .detail-card h2 {
+            font-size: 18px;
+        }
+
+        .btn-add {
+            padding: 8px 14px;
+
+            border-radius: 10px;
+
+            border: none;
+
+            background: #facc15;
+
+            color: #202832;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition: 0.15s;
+        }
+
+        .btn-add:hover {
+            background: #eab308;
         }
 
         .detail-row {
@@ -437,6 +508,33 @@
 
         .detail-row span:last-child {
             font-weight: 600;
+        }
+
+        .repair-log {
+            margin-top: 4px;
+
+            max-height: 140px;
+
+            overflow-y: auto;
+        }
+
+        .repair-log-row {
+            display: flex;
+
+            justify-content: space-between;
+
+            padding: 8px 0;
+
+            font-size: 12px;
+
+            border-bottom: 1px dashed #edf0f2;
+
+            color: #6b7280;
+        }
+
+        .repair-log-row span:last-child {
+            font-weight: 600;
+            color: #1f2937;
         }
 
 
@@ -491,6 +589,153 @@
             color: #9ca3af;
 
             font-size: 12px;
+        }
+
+
+        /* ================= MODAL ================= */
+
+        .modal-overlay {
+            display: none;
+
+            position: fixed;
+
+            inset: 0;
+
+            background: rgba(17, 24, 39, 0.55);
+
+            align-items: center;
+
+            justify-content: center;
+
+            z-index: 100;
+
+            padding: 20px;
+        }
+
+        .modal-overlay.open {
+            display: flex;
+        }
+
+        .modal-box {
+            background: white;
+
+            width: 100%;
+
+            max-width: 400px;
+
+            border-radius: 18px;
+
+            padding: 26px;
+
+            box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+        }
+
+        .modal-box h3 {
+            font-size: 18px;
+
+            margin-bottom: 4px;
+        }
+
+        .modal-sub {
+            font-size: 13px;
+
+            color: #6b7280;
+
+            margin-bottom: 20px;
+        }
+
+        .field {
+            margin-bottom: 16px;
+        }
+
+        .field label {
+            display: block;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            color: #374151;
+
+            margin-bottom: 6px;
+        }
+
+        .field select,
+        .field input {
+            width: 100%;
+
+            padding: 10px 12px;
+
+            border-radius: 10px;
+
+            border: 1px solid #d1d5db;
+
+            font-size: 13px;
+
+            color: #1f2937;
+        }
+
+        .field select:focus,
+        .field input:focus {
+            outline: 2px solid #facc15;
+            outline-offset: 1px;
+            border-color: #facc15;
+        }
+
+        .modal-actions {
+            display: flex;
+
+            gap: 10px;
+
+            margin-top: 22px;
+        }
+
+        .btn-cancel {
+            flex: 1;
+
+            padding: 11px;
+
+            border-radius: 10px;
+
+            border: 1px solid #d1d5db;
+
+            background: white;
+
+            color: #374151;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+        }
+
+        .btn-cancel:hover {
+            background: #f9fafb;
+        }
+
+        .btn-save {
+            flex: 1;
+
+            padding: 11px;
+
+            border-radius: 10px;
+
+            border: none;
+
+            background: #202832;
+
+            color: white;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+        }
+
+        .btn-save:hover {
+            background: #111827;
         }
 
 
@@ -605,7 +850,7 @@
 
             <h3>Total Vehicles</h3>
 
-            <div class="number">
+            <div class="number" id="stat-total">
                 12
             </div>
 
@@ -620,7 +865,7 @@
 
             <h3>Healthy Vehicles</h3>
 
-            <div class="number green">
+            <div class="number green" id="stat-healthy">
                 8
             </div>
 
@@ -635,7 +880,7 @@
 
             <h3>Service Due Soon</h3>
 
-            <div class="number yellow">
+            <div class="number yellow" id="stat-due">
                 3
             </div>
 
@@ -650,7 +895,7 @@
 
             <h3>Critical Vehicles</h3>
 
-            <div class="number red">
+            <div class="number red" id="stat-critical">
                 1
             </div>
 
@@ -672,12 +917,26 @@
 
 
 
-    <section class="vehicles">
+    <section class="vehicles" id="vehicles-grid">
 
+        <!--
+            ADDING A NEW VEHICLE CARD (read this before merging):
+            Copy one whole ".vehicle-card" block below and keep these 4 things
+            exactly as-is, only changing the values, or the JS won't detect the card:
+              1. data-vehicle="JCB-XXX"                on the outer .vehicle-card div
+              2. class="status healthy" data-role="status-badge"   on the status span
+                 (use class "healthy" / "due" / "critical")
+              3. class="health-fill health-green" data-role="health-fill" style="width: NN%;"
+                 (use fill class "health-green" / "health-yellow" / "health-red")
+              4. data-role="health-percent"             on the <strong> showing NN%
+            Summary counts (Total/Healthy/Due/Critical) and the alert box are
+            calculated automatically from these cards on page load — no numbers
+            to edit by hand, so merging multiple people's cards together is safe.
+        -->
 
         <!-- VEHICLE 1 -->
 
-        <div class="vehicle-card">
+        <div class="vehicle-card" data-vehicle="JCB-001">
 
             <div class="vehicle-header">
 
@@ -693,7 +952,7 @@
 
                 </div>
 
-                <span class="status healthy">
+                <span class="status healthy" data-role="status-badge">
                     ● HEALTHY
                 </span>
 
@@ -729,13 +988,25 @@
 
                 <span>Vehicle Health</span>
 
-                <strong>90%</strong>
+                <strong data-role="health-percent">90%</strong>
 
             </div>
 
             <div class="health-bar">
 
-                <div class="health-fill health-green"></div>
+                <div class="health-fill health-green" data-role="health-fill" style="width: 90%;"></div>
+
+            </div>
+
+            <div class="vehicle-actions">
+
+                <button class="btn-small" onclick="openStatusModal('JCB-001')">
+                    Update Status
+                </button>
+
+                <button class="btn-small" onclick="openRepairModal('JCB-001')">
+                    Add Repair Cost
+                </button>
 
             </div>
 
@@ -745,7 +1016,7 @@
 
         <!-- VEHICLE 2 -->
 
-        <div class="vehicle-card">
+        <div class="vehicle-card" data-vehicle="JCB-002">
 
             <div class="vehicle-header">
 
@@ -761,7 +1032,7 @@
 
                 </div>
 
-                <span class="status due">
+                <span class="status due" data-role="status-badge">
                     ● DUE SOON
                 </span>
 
@@ -797,13 +1068,25 @@
 
                 <span>Vehicle Health</span>
 
-                <strong>65%</strong>
+                <strong data-role="health-percent">65%</strong>
 
             </div>
 
             <div class="health-bar">
 
-                <div class="health-fill health-yellow"></div>
+                <div class="health-fill health-yellow" data-role="health-fill" style="width: 65%;"></div>
+
+            </div>
+
+            <div class="vehicle-actions">
+
+                <button class="btn-small" onclick="openStatusModal('JCB-002')">
+                    Update Status
+                </button>
+
+                <button class="btn-small" onclick="openRepairModal('JCB-002')">
+                    Add Repair Cost
+                </button>
 
             </div>
 
@@ -813,7 +1096,7 @@
 
         <!-- VEHICLE 3 -->
 
-        <div class="vehicle-card">
+        <div class="vehicle-card" data-vehicle="JCB-003">
 
             <div class="vehicle-header">
 
@@ -829,7 +1112,7 @@
 
                 </div>
 
-                <span class="status critical">
+                <span class="status critical" data-role="status-badge">
                     ● CRITICAL
                 </span>
 
@@ -865,13 +1148,25 @@
 
                 <span>Vehicle Health</span>
 
-                <strong>30%</strong>
+                <strong data-role="health-percent">30%</strong>
 
             </div>
 
             <div class="health-bar">
 
-                <div class="health-fill health-red"></div>
+                <div class="health-fill health-red" data-role="health-fill" style="width: 30%;"></div>
+
+            </div>
+
+            <div class="vehicle-actions">
+
+                <button class="btn-small" onclick="openStatusModal('JCB-003')">
+                    Update Status
+                </button>
+
+                <button class="btn-small" onclick="openRepairModal('JCB-003')">
+                    Add Repair Cost
+                </button>
 
             </div>
 
@@ -891,13 +1186,21 @@
 
         <div class="detail-card">
 
-            <h2>🔧 Maintenance Overview</h2>
+            <div class="detail-card-header">
+
+                <h2>🔧 Maintenance Overview</h2>
+
+                <button class="btn-add" onclick="openRepairModal()">
+                    + Add Repair Cost
+                </button>
+
+            </div>
 
             <div class="detail-row">
 
                 <span>Upcoming Services</span>
 
-                <span class="yellow">3 Vehicles</span>
+                <span class="yellow" id="stat-upcoming">3 Vehicles</span>
 
             </div>
 
@@ -905,7 +1208,7 @@
 
                 <span>Overdue Services</span>
 
-                <span class="red">1 Vehicle</span>
+                <span class="red" id="stat-overdue">1 Vehicle</span>
 
             </div>
 
@@ -913,7 +1216,7 @@
 
                 <span>Recent Repairs</span>
 
-                <span>2 Records</span>
+                <span id="stat-repairs">2 Records</span>
 
             </div>
 
@@ -921,8 +1224,12 @@
 
                 <span>Maintenance Cost</span>
 
-                <span>Rs. 118,000</span>
+                <span id="stat-cost">Rs. 118,000</span>
 
+            </div>
+
+            <div class="repair-log" id="repair-log">
+                <!-- Newly added repair entries appear here -->
             </div>
 
         </div>
@@ -976,7 +1283,7 @@
 
     <!-- ================= ALERT ================= -->
 
-    <div class="alert">
+    <div class="alert" id="alert-box">
 
         <div class="alert-icon">
             ⚠️
@@ -986,7 +1293,7 @@
 
             <h3>Maintenance Attention Required</h3>
 
-            <p>
+            <p id="alert-text">
                 JCB-003 has an overdue service and requires
                 maintenance attention.
             </p>
@@ -1003,6 +1310,248 @@
 <footer>
     JCB Management System • Maintenance & Fuel Tracking
 </footer>
+
+
+<!-- ================= UPDATE STATUS MODAL ================= -->
+
+<div class="modal-overlay" id="status-modal">
+
+    <div class="modal-box">
+
+        <h3>Update Vehicle Status</h3>
+
+        <p class="modal-sub" id="status-modal-sub">Change health condition for this vehicle</p>
+
+        <div class="field">
+            <label for="status-select">Status</label>
+            <select id="status-select">
+                <option value="healthy">Healthy</option>
+                <option value="due">Due Soon</option>
+                <option value="critical">Critical</option>
+            </select>
+        </div>
+
+        <div class="field">
+            <label for="health-input">Vehicle Health (%)</label>
+            <input type="number" id="health-input" min="0" max="100" value="90">
+        </div>
+
+        <div class="modal-actions">
+            <button class="btn-cancel" onclick="closeModal('status-modal')">Cancel</button>
+            <button class="btn-save" onclick="saveStatus()">Save Status</button>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= ADD REPAIR COST MODAL ================= -->
+
+<div class="modal-overlay" id="repair-modal">
+
+    <div class="modal-box">
+
+        <h3>Add Repair Cost</h3>
+
+        <p class="modal-sub">Log a repair or service cost for a vehicle</p>
+
+        <div class="field">
+            <label for="repair-vehicle-select">Vehicle</label>
+            <select id="repair-vehicle-select">
+                <option value="JCB-001">JCB-001</option>
+                <option value="JCB-002">JCB-002</option>
+                <option value="JCB-003">JCB-003</option>
+            </select>
+        </div>
+
+        <div class="field">
+            <label for="repair-desc-input">Repair Description</label>
+            <input type="text" id="repair-desc-input" placeholder="e.g. Hydraulic hose replacement">
+        </div>
+
+        <div class="field">
+            <label for="repair-cost-input">Cost (Rs.)</label>
+            <input type="number" id="repair-cost-input" min="0" placeholder="e.g. 15000">
+        </div>
+
+        <div class="modal-actions">
+            <button class="btn-cancel" onclick="closeModal('repair-modal')">Cancel</button>
+            <button class="btn-save" onclick="saveRepairCost()">Save Repair</button>
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    // ---------- In-memory state ----------
+
+    let maintenanceCost = 118000;
+    let repairCount = 2;
+    let activeStatusVehicle = null;
+
+    const statusMeta = {
+        healthy:  { label: "● HEALTHY",  badgeClass: "healthy",  fillClass: "health-green"  },
+        due:      { label: "● DUE SOON", badgeClass: "due",      fillClass: "health-yellow" },
+        critical: { label: "● CRITICAL", badgeClass: "critical", fillClass: "health-red"    }
+    };
+
+
+    // ---------- Modal open/close ----------
+
+    function openStatusModal(vehicleId) {
+        activeStatusVehicle = vehicleId;
+
+        const card = document.querySelector(`.vehicle-card[data-vehicle="${vehicleId}"]`);
+        const currentBadge = card.querySelector('[data-role="status-badge"]');
+        const currentHealth = card.querySelector('[data-role="health-percent"]').textContent.replace('%', '');
+
+        let currentStatus = "healthy";
+        if (currentBadge.classList.contains("due")) currentStatus = "due";
+        if (currentBadge.classList.contains("critical")) currentStatus = "critical";
+
+        document.getElementById("status-modal-sub").textContent = `Change health condition for ${vehicleId}`;
+        document.getElementById("status-select").value = currentStatus;
+        document.getElementById("health-input").value = currentHealth;
+
+        document.getElementById("status-modal").classList.add("open");
+    }
+
+    function openRepairModal(vehicleId) {
+        document.getElementById("repair-desc-input").value = "";
+        document.getElementById("repair-cost-input").value = "";
+
+        if (vehicleId) {
+            document.getElementById("repair-vehicle-select").value = vehicleId;
+        }
+
+        document.getElementById("repair-modal").classList.add("open");
+    }
+
+    function closeModal(id) {
+        document.getElementById(id).classList.remove("open");
+    }
+
+
+    // ---------- Save status update ----------
+
+    function saveStatus() {
+        if (!activeStatusVehicle) return;
+
+        const status = document.getElementById("status-select").value;
+        let health = parseInt(document.getElementById("health-input").value, 10);
+
+        if (isNaN(health)) health = 0;
+        health = Math.max(0, Math.min(100, health));
+
+        const meta = statusMeta[status];
+        const card = document.querySelector(`.vehicle-card[data-vehicle="${activeStatusVehicle}"]`);
+
+        const badge = card.querySelector('[data-role="status-badge"]');
+        badge.className = `status ${meta.badgeClass}`;
+        badge.setAttribute("data-role", "status-badge");
+        badge.textContent = meta.label;
+
+        const fill = card.querySelector('[data-role="health-fill"]');
+        fill.className = `health-fill ${meta.fillClass}`;
+        fill.setAttribute("data-role", "health-fill");
+        fill.style.width = health + "%";
+
+        card.querySelector('[data-role="health-percent"]').textContent = health + "%";
+
+        closeModal("status-modal");
+        recalculateSummary();
+    }
+
+
+    // ---------- Save repair cost ----------
+
+    function saveRepairCost() {
+        const vehicle = document.getElementById("repair-vehicle-select").value;
+        const desc = document.getElementById("repair-desc-input").value.trim();
+        const cost = parseFloat(document.getElementById("repair-cost-input").value);
+
+        if (!desc || isNaN(cost) || cost <= 0) {
+            alert("Please enter a repair description and a valid cost.");
+            return;
+        }
+
+        maintenanceCost += cost;
+        repairCount += 1;
+
+        document.getElementById("stat-cost").textContent = `Rs. ${maintenanceCost.toLocaleString('en-IN')}`;
+        document.getElementById("stat-repairs").textContent = `${repairCount} Records`;
+
+        const log = document.getElementById("repair-log");
+        const row = document.createElement("div");
+        row.className = "repair-log-row";
+        row.innerHTML = `<span>${vehicle} — ${desc}</span><span>Rs. ${cost.toLocaleString('en-IN')}</span>`;
+        log.prepend(row);
+
+        closeModal("repair-modal");
+    }
+
+
+    // ---------- Recalculate summary cards + alert ----------
+
+    function recalculateSummary() {
+        const cards = document.querySelectorAll(".vehicle-card");
+
+        let healthy = 0, due = 0, critical = 0;
+        let criticalNames = [];
+        let dueNames = [];
+
+        cards.forEach(card => {
+            const badge = card.querySelector('[data-role="status-badge"]');
+            const name = card.getAttribute("data-vehicle");
+
+            if (badge.classList.contains("healthy")) healthy++;
+            if (badge.classList.contains("due")) { due++; dueNames.push(name); }
+            if (badge.classList.contains("critical")) { critical++; criticalNames.push(name); }
+        });
+
+        document.getElementById("stat-total").textContent = cards.length;
+        document.getElementById("stat-healthy").textContent = healthy;
+        document.getElementById("stat-due").textContent = due;
+        document.getElementById("stat-critical").textContent = critical;
+
+        document.getElementById("stat-upcoming").textContent = `${due} Vehicle${due === 1 ? '' : 's'}`;
+        document.getElementById("stat-overdue").textContent = `${critical} Vehicle${critical === 1 ? '' : 's'}`;
+
+        const alertBox = document.getElementById("alert-box");
+        const alertText = document.getElementById("alert-text");
+
+        if (critical > 0) {
+            alertBox.style.display = "flex";
+            alertText.textContent = `${criticalNames.join(", ")} ${criticalNames.length === 1 ? 'has' : 'have'} an overdue service and requires maintenance attention.`;
+        } else if (due > 0) {
+            alertBox.style.display = "flex";
+            alertBox.style.borderLeftColor = "#f59e0b";
+            alertText.textContent = `${dueNames.join(", ")} ${dueNames.length === 1 ? 'is' : 'are'} due for service soon.`;
+        } else {
+            alertBox.style.display = "none";
+        }
+    }
+
+
+    // Close modal when clicking outside the box
+    document.querySelectorAll(".modal-overlay").forEach(overlay => {
+        overlay.addEventListener("click", (e) => {
+            if (e.target === overlay) {
+                overlay.classList.remove("open");
+            }
+        });
+    });
+
+
+    // Recalculate summary on load so the numbers always match the
+    // vehicle cards actually present on the page (instead of static text)
+    recalculateSummary();
+
+</script>
 
 
 </body>
