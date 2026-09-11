@@ -3,7 +3,6 @@ package com.jcb.jcbbookingsystem.service;
 import com.jcb.jcbbookingsystem.dto.AuthResponse;
 import com.jcb.jcbbookingsystem.dto.LoginRequest;
 import com.jcb.jcbbookingsystem.dto.RegisterRequest;
-import com.jcb.jcbbookingsystem.model.Role;
 import com.jcb.jcbbookingsystem.model.User;
 import com.jcb.jcbbookingsystem.repository.UserRepository;
 import com.jcb.jcbbookingsystem.config.JwtUtil;
@@ -15,6 +14,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import com.jcb.jcbbookingsystem.model.Role;
 
 @Service
 @RequiredArgsConstructor
