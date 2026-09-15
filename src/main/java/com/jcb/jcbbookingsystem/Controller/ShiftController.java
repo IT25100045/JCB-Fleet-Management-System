@@ -3,6 +3,7 @@ package com.jcb.jcbbookingsystem.Controller;
 import com.jcb.jcbbookingsystem.dto.ShiftRequest;
 import com.jcb.jcbbookingsystem.dto.ShiftResponse;
 import com.jcb.jcbbookingsystem.dto.OvertimeResponse;
+import com.jcb.jcbbookingsystem.dto.WorkloadResponse;
 import com.jcb.jcbbookingsystem.model.ShiftStatus;
 import com.jcb.jcbbookingsystem.service.ShiftService;
 import lombok.RequiredArgsConstructor;
@@ -81,6 +82,17 @@ public class ShiftController {
                 shiftService.getOvertime(driverId, date)
         );
     }
+
+    @GetMapping("/driver/{driverId}/workload")
+    public ResponseEntity<WorkloadResponse> getWorkload(
+            @PathVariable Long driverId,
+            @RequestParam LocalDate date) {
+
+        return ResponseEntity.ok(
+                shiftService.getWorkload(driverId, date)
+        );
+    }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<ShiftResponse> updateShift(

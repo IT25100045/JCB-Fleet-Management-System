@@ -3,6 +3,7 @@ package com.jcb.jcbbookingsystem.service;
 import com.jcb.jcbbookingsystem.dto.ShiftRequest;
 import com.jcb.jcbbookingsystem.dto.ShiftResponse;
 import com.jcb.jcbbookingsystem.dto.OvertimeResponse;
+import com.jcb.jcbbookingsystem.dto.WorkloadResponse;
 import com.jcb.jcbbookingsystem.exception.ConflictException;
 import com.jcb.jcbbookingsystem.exception.ResourceNotFoundException;
 import com.jcb.jcbbookingsystem.model.Driver;
@@ -54,6 +55,30 @@ public class ShiftService {
         if (!overlappingShifts.isEmpty()) {
             throw new ConflictException(
                     "Driver already has an overlapping shift"
+            );
+        }
+
+        double existingHours = shiftRepository.findByDriverId(request.getDriverId())
+                .stream()
+                .filter(shift -> shift.getDate().equals(request.getDate()))
+                .filter(shift -> shift.getStatus() != ShiftStatus.CANCELLED)
+                .mapToDouble(shift ->
+                        java.time.Duration.between(
+                                shift.getStartTime(),
+                                shift.getEndTime()
+                        ).toMinutes() / 60.0
+                )
+                .sum();
+
+        double newShiftHours =
+                java.time.Duration.between(
+                        request.getStartTime(),
+                        request.getEndTime()
+                ).toMinutes() / 60.0;
+
+        if (existingHours + newShiftHours > 12.0) {
+            throw new ConflictException(
+                    "Driver workload exceeds the maximum 12 hours per day"
             );
         }
 
@@ -149,6 +174,31 @@ public class ShiftService {
         if (!overlappingShifts.isEmpty()) {
             throw new ConflictException(
                     "Driver already has an overlapping shift"
+            );
+        }
+
+        double existingHours = shiftRepository.findByDriverId(request.getDriverId())
+                .stream()
+                .filter(existingShift -> existingShift.getDate().equals(request.getDate()))
+                .filter(existingShift -> existingShift.getStatus() != ShiftStatus.CANCELLED)
+                .filter(existingShift -> !existingShift.getId().equals(id))
+                .mapToDouble(existingShift ->
+                        java.time.Duration.between(
+                                existingShift.getStartTime(),
+                                existingShift.getEndTime()
+                        ).toMinutes() / 60.0
+                )
+                .sum();
+
+        double updatedShiftHours =
+                java.time.Duration.between(
+                        request.getStartTime(),
+                        request.getEndTime()
+                ).toMinutes() / 60.0;
+
+        if (existingHours + updatedShiftHours > 12.0) {
+            throw new ConflictException(
+                    "Driver workload exceeds the maximum 12 hours per day"
             );
         }
 
@@ -274,6 +324,41 @@ public class ShiftService {
                 .totalHours(totalHours)
                 .normalHours(normalHours)
                 .overtimeHours(overtimeHours)
+                .build();
+    }
+
+    public WorkloadResponse getWorkload(Long driverId, LocalDate date) {
+
+        driverService.findEntity(driverId);
+
+        List<Shift> shifts = shiftRepository.findByDriverId(driverId)
+                .stream()
+                .filter(shift -> shift.getDate().equals(date))
+                .filter(shift -> shift.getStatus() != ShiftStatus.CANCELLED)
+                .collect(Collectors.toList());
+
+        double totalHours = shifts.stream()
+                .mapToDouble(shift ->
+                        java.time.Duration.between(
+                                shift.getStartTime(),
+                                shift.getEndTime()
+                        ).toMinutes() / 60.0
+                )
+                .sum();
+
+        double maximumHours = 12.0;
+
+        double remainingHours = Math.max(maximumHours - totalHours, 0.0);
+
+        boolean workloadExceeded = totalHours > maximumHours;
+
+        return WorkloadResponse.builder()
+                .driverId(driverId)
+                .date(date)
+                .totalHours(totalHours)
+                .maximumHours(maximumHours)
+                .remainingHours(remainingHours)
+                .workloadExceeded(workloadExceeded)
                 .build();
     }
 }
