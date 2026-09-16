@@ -1,5 +1,8 @@
 package com.jcb.jcbbookingsystem.service;
 
+import com.jcb.jcbbookingsystem.model.Vehicle;
+import com.jcb.jcbbookingsystem.model.VehicleStatus;
+import com.jcb.jcbbookingsystem.repository.VehicleRepository;
 import com.jcb.system.exception.DuplicateResourceException;
 import com.jcb.system.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
