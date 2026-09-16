@@ -1,5 +1,6 @@
 package com.jcb.jcbbookingsystem.service;
 
+import com.jcb.jcbbookingsystem.dto.VehicleDTO;
 import com.jcb.jcbbookingsystem.model.Vehicle;
 import com.jcb.jcbbookingsystem.model.VehicleStatus;
 import com.jcb.jcbbookingsystem.repository.VehicleRepository;
