@@ -1,6 +1,8 @@
 package com.jcb.jcbbookingsystem.Controller;
 
+import com.jcb.jcbbookingsystem.dto.VehicleDTO;
 import com.jcb.jcbbookingsystem.model.VehicleStatus;
+import com.jcb.jcbbookingsystem.service.VehicleService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
