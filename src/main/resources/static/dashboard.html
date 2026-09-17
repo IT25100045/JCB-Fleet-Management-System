@@ -1240,13 +1240,21 @@
 
         <div class="detail-card">
 
-            <h2>⛽ Fuel Overview</h2>
+            <div class="detail-card-header">
+
+                <h2>⛽ Fuel Overview</h2>
+
+                <button class="btn-add" onclick="openFuelModal()">
+                    + Add Fuel Cost
+                </button>
+
+            </div>
 
             <div class="detail-row">
 
                 <span>Fuel Records</span>
 
-                <span>24 Entries</span>
+                <span id="stat-fuel-records">24 Entries</span>
 
             </div>
 
@@ -1272,6 +1280,18 @@
 
                 <span class="red">2 Vehicles</span>
 
+            </div>
+
+            <div class="detail-row">
+
+                <span>Fuel Cost</span>
+
+                <span id="stat-fuel-cost">Rs. 0</span>
+
+            </div>
+
+            <div class="repair-log" id="fuel-log">
+                <!-- Newly added fuel entries appear here -->
             </div>
 
         </div>
@@ -1385,6 +1405,45 @@
 </div>
 
 
+<!-- ================= ADD FUEL COST MODAL ================= -->
+
+<div class="modal-overlay" id="fuel-modal">
+
+    <div class="modal-box">
+
+        <h3>Add Fuel Cost</h3>
+
+        <p class="modal-sub">Log a fuel top-up cost for a vehicle</p>
+
+        <div class="field">
+            <label for="fuel-vehicle-select">Vehicle</label>
+            <select id="fuel-vehicle-select">
+                <option value="JCB-001">JCB-001</option>
+                <option value="JCB-002">JCB-002</option>
+                <option value="JCB-003">JCB-003</option>
+            </select>
+        </div>
+
+        <div class="field">
+            <label for="fuel-liters-input">Liters Filled</label>
+            <input type="number" id="fuel-liters-input" min="0" step="0.1" placeholder="e.g. 40">
+        </div>
+
+        <div class="field">
+            <label for="fuel-cost-input">Cost (Rs.)</label>
+            <input type="number" id="fuel-cost-input" min="0" placeholder="e.g. 8500">
+        </div>
+
+        <div class="modal-actions">
+            <button class="btn-cancel" onclick="closeModal('fuel-modal')">Cancel</button>
+            <button class="btn-save" onclick="saveFuelCost()">Save Fuel</button>
+        </div>
+
+    </div>
+
+</div>
+
+
 <script>
 
     // ---------- In-memory state ----------
@@ -1392,6 +1451,9 @@
     let maintenanceCost = 118000;
     let repairCount = 2;
     let activeStatusVehicle = null;
+
+    let fuelCost = 0;
+    let fuelRecordCount = 24;
 
     const statusMeta = {
         healthy:  { label: "● HEALTHY",  badgeClass: "healthy",  fillClass: "health-green"  },
@@ -1429,6 +1491,17 @@
         }
 
         document.getElementById("repair-modal").classList.add("open");
+    }
+
+    function openFuelModal(vehicleId) {
+        document.getElementById("fuel-liters-input").value = "";
+        document.getElementById("fuel-cost-input").value = "";
+
+        if (vehicleId) {
+            document.getElementById("fuel-vehicle-select").value = vehicleId;
+        }
+
+        document.getElementById("fuel-modal").classList.add("open");
     }
 
     function closeModal(id) {
@@ -1492,6 +1565,34 @@
         log.prepend(row);
 
         closeModal("repair-modal");
+    }
+
+
+    // ---------- Save fuel cost ----------
+
+    function saveFuelCost() {
+        const vehicle = document.getElementById("fuel-vehicle-select").value;
+        const liters = parseFloat(document.getElementById("fuel-liters-input").value);
+        const cost = parseFloat(document.getElementById("fuel-cost-input").value);
+
+        if (isNaN(liters) || liters <= 0 || isNaN(cost) || cost <= 0) {
+            alert("Please enter valid liters and cost.");
+            return;
+        }
+
+        fuelCost += cost;
+        fuelRecordCount += 1;
+
+        document.getElementById("stat-fuel-cost").textContent = `Rs. ${fuelCost.toLocaleString('en-IN')}`;
+        document.getElementById("stat-fuel-records").textContent = `${fuelRecordCount} Entries`;
+
+        const log = document.getElementById("fuel-log");
+        const row = document.createElement("div");
+        row.className = "repair-log-row";
+        row.innerHTML = `<span>${vehicle} — ${liters} L</span><span>Rs. ${cost.toLocaleString('en-IN')}</span>`;
+        log.prepend(row);
+
+        closeModal("fuel-modal");
     }
 
 
