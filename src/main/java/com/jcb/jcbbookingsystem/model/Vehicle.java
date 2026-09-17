@@ -6,35 +6,30 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-
 @Entity
 @Table(name = "vehicles")
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class Vehicle {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", nullable = false)
-    private String name;
+    @Column(nullable = false)
+    private String model;
 
-    @Column(name = "vehicle_number", unique = true)
-    private String vehicleNumber;
+    private Double engineCapacity;
 
-    @Column(name = "vehicle_type")
-    private String vehicleType;
+    @Column(nullable = false)
+    private Double hourlyRate;
 
-    @Column(name = "price_per_day", precision = 10, scale = 2)
-    private BigDecimal pricePerDay;
+    @Column(nullable = false, unique = true)
+    private String registrationId;
 
-    @Column(name = "status")
-    private String status;
-
-    @Column(name = "health_percent")
-    private Integer healthPercent;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private VehicleStatus status;
 }
