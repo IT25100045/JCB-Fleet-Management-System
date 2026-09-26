@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JCB Fleet - Home</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<main class="container">
+    <div class="hero-banner">
+        <img src="images/dashboard_banner.jpg" alt="Fleet Overview">
+        <div class="overlay">
+            <h2>Manage Your Fleet at Scale</h2>
+            <p>Monitor your heavy machinery, track maintenance, and handle billing from one unified smart dashboard.</p>
+        </div>
+    </div>
+
+    <div class="welcome">
+        <h2>👋 Welcome to JCB Fleet System</h2>
+        <p>Manage your bookings, fleet, and drivers from a centralized dashboard.</p>
+    </div>
+
+    <section class="summary">
+        <div class="summary-card">
+            <div class="card-icon">📅</div>
+            <h3>Active Bookings</h3>
+            <div class="number">12</div>
+        </div>
+        <div class="summary-card">
+            <div class="card-icon">🚜</div>
+            <h3>Available JCBs</h3>
+            <div class="number green">5</div>
+        </div>
+        <div class="summary-card">
+            <div class="card-icon">👷</div>
+            <h3>Drivers on Duty</h3>
+            <div class="number">10</div>
+        </div>
+        <div class="summary-card">
+            <div class="card-icon">💰</div>
+            <h3>Today's Revenue</h3>
+            <div class="number green">45k</div>
+        </div>
+    </section>
+
+    <div class="section-heading">
+        <h2>Recent Bookings</h2>
+        <a href="#" class="btn-primary">New Booking</a>
+    </div>
+
+    <div class="table-card">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Customer</th>
+                    <th>Machine</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="bookings-table">
+                <tr>
+                    <td>#BK-1001</td>
+                    <td>Saman Perera</td>
+                    <td>JCB-001</td>
+                    <td>Oct 12, 2026</td>
+                    <td><span class="status healthy">● CONFIRMED</span></td>
+                </tr>
+                <tr>
+                    <td>#BK-1002</td>
+                    <td>Lanka Builders</td>
+                    <td>JCB-005</td>
+                    <td>Oct 14, 2026</td>
+                    <td><span class="status due">● PENDING</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</main>
+
+<script src="api.js"></script>
+<script src="nav.js"></script>
+</body>
+</html>

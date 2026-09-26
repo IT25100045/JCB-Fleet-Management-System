@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JCB Fleet - Revenue</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<main class="container">
+    <div class="welcome">
+        <h2>📈 Revenue & Financials</h2>
+        <p>Monitor your daily, weekly, and monthly income from machinery rentals.</p>
+    </div>
+
+    <section class="summary">
+        <div class="summary-card">
+            <div class="card-icon">💰</div>
+            <h3>Today's Revenue</h3>
+            <div class="number green">45,000</div>
+        </div>
+        <div class="summary-card">
+            <div class="card-icon">💵</div>
+            <h3>This Week</h3>
+            <div class="number">320,000</div>
+        </div>
+        <div class="summary-card">
+            <div class="card-icon">📊</div>
+            <h3>This Month</h3>
+            <div class="number">1,450,000</div>
+        </div>
+        <div class="summary-card">
+            <div class="card-icon">⏳</div>
+            <h3>Pending Payments</h3>
+            <div class="number yellow">230,000</div>
+        </div>
+    </section>
+
+    <div class="section-heading">
+        <h2>Recent Transactions</h2>
+    </div>
+
+    <div class="table-card">
+        <table>
+            <thead>
+                <tr>
+                    <th>Transaction ID</th>
+                    <th>Description</th>
+                    <th>Date</th>
+                    <th>Amount (Rs.)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>#TXN-9012</td>
+                    <td>Payment for #INV-2041</td>
+                    <td>Oct 10, 2026</td>
+                    <td class="green font-bold">+25,000</td>
+                </tr>
+                <tr>
+                    <td>#TXN-9011</td>
+                    <td>Payment for #INV-2038</td>
+                    <td>Oct 09, 2026</td>
+                    <td class="green font-bold">+60,000</td>
+                </tr>
+                <tr>
+                    <td>#TXN-9010</td>
+                    <td>Maintenance Cost (JCB-001)</td>
+                    <td>Oct 08, 2026</td>
+                    <td class="red font-bold">-15,000</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</main>
+
+<script src="api.js"></script>
+<script src="nav.js"></script>
+<script src="revenue.js"></script>
+</body>
+</html>

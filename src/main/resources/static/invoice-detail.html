@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice Details - JCB Fleet System</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+</head>
+<body>
+
+    <!-- nav.js will inject the header here -->    <main class="container">
+        <div class="action-bar no-print">
+            <a href="invoices.html" class="back-link">← Back to Invoices</a>
+            <div style="display:flex; gap:10px;">
+                <button class="btn-primary" id="recordPaymentBtn">Record Payment</button>
+                <button class="btn-outline" id="printBtn">🖨️ Print / Export PDF</button>
+            </div>
+        </div>
+
+        <div id="alertBox"></div>
+        <div id="loadingMsg" style="text-align: center; color: #94a3b8; padding: 40px;">Loading invoice details...</div>
+
+        <div id="content" style="display:none;">
+            <div class="invoice-sheet">
+                
+                <div class="sheet-header">
+                    <div>
+                        <h2 id="pageTitle">Invoice <span id="invNumber"></span></h2>
+                        <div class="meta" id="invMeta">Issued today</div>
+                    </div>
+                    <span class="badge" id="invStatusBadge"></span>
+                </div>
+
+                <div class="form-grid">
+                    <div>
+                        <div class="stat-label">Billed To</div>
+                        <div class="stat-value" id="invCustomer">Loading...</div>
+                        <div style="font-size: 13px; color: #94a3b8; margin-top: 4px;" id="invUserId"></div>
+                    </div>
+                    <div>
+                        <div class="stat-label">Booking Reference</div>
+                        <div class="stat-value" id="invBooking">Loading...</div>
+                    </div>
+                    <div>
+                        <div class="stat-label">Issue Date</div>
+                        <div class="stat-value" id="invIssueDate">Loading...</div>
+                    </div>
+                    <div>
+                        <div class="stat-label">Due Date</div>
+                        <div class="stat-value" id="invDueDate">Upon Receipt</div>
+                    </div>
+                </div>
+
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th style="text-align: left;">Description</th>
+                            <th class="text-right">Amount (LKR)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>JCB Rental Base Charge</td>
+                            <td class="text-right" id="rowSubtotal">0.00</td>
+                        </tr>
+                        <tr>
+                            <td>Overtime Charges</td>
+                            <td class="text-right" id="rowTax">0.00</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr class="total-row">
+                            <td>Total Amount</td>
+                            <td class="text-right" id="rowTotal">0.00</td>
+                        </tr>
+                        <tr>
+                            <td>Amount Paid (Deposit + Payments)</td>
+                            <td class="text-right" id="rowPaid" style="color: #34d399;">0.00</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 600;">Balance Due</td>
+                            <td class="text-right" id="rowBalance" style="font-weight: 600; color: #fb7185;">0.00</td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+                <div style="margin-top: 40px;" class="no-print">
+                    <h3>Payments</h3>
+                    <div id="paymentsWrap">Loading payments...</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Record payment modal -->
+    <div class="modal" id="paymentModal">
+        <div class="modal-content">
+            <h3>Record Payment</h3>
+            <p>Remaining Balance: <strong id="remainingBalanceDisplay">0.00</strong> LKR</p>
+            <div id="paymentModalAlert"></div>
+            <form id="paymentForm">
+                <div class="field">
+                    <label>Amount (LKR)</label>
+                    <input type="number" id="paymentAmount" required step="0.01" min="0.01">
+                </div>
+                <div class="field">
+                    <label>Method</label>
+                    <select id="paymentMethod" required style="width:100%; padding:10px; background:#1e293b; color:#fff; border:1px solid #334155; border-radius:8px;">
+                        <option value="CASH">Cash</option>
+                        <option value="BANK_TRANSFER">Bank Transfer</option>
+                        <option value="CARD">Credit Card</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>Reference Note (Optional)</label>
+                    <input type="text" id="paymentReference">
+                </div>
+                <div class="modal-actions" style="margin-top:20px; display:flex; gap:10px; justify-content:flex-end;">
+                    <button type="button" class="btn btn-outline" id="closePaymentModalBtn">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="paymentSubmitBtn">Record payment</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="api.js"></script>
+    <script src="nav.js"></script>
+    <script src="invoice-detail.js"></script>
+</body>
+</html>
