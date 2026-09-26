@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JCB Fleet - Booking & Scheduling</title>
+    <link rel="stylesheet" href="../../../../../../Downloads/JCB-Fleet-Management-System%20(2)/JCB-Fleet-Management-System/src/main/resources/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+</head>
+<body>
+
+    <main class="container">
+        <div class="hero-banner">
+            <img src="../../../../../../Downloads/JCB-Fleet-Management-System%20(2)/JCB-Fleet-Management-System/src/main/resources/static/images/booking_banner_1789815076526.jpg" alt="Booking Banner">
+            <div class="overlay">
+                <h2>Logistics & Reservations</h2>
+                <p>Efficiently plan deployments and monitor machinery assignments across sites.</p>
+            </div>
+        </div>
+        <div class="welcome">
+            <div>
+                <h2>Booking & Scheduling</h2>
+                <p>Manage customer reservations, track heavy machinery assignments, and update booking statuses.</p>
+            </div>
+            <button class="btn-primary" onclick="openBookingModal()">+ New Booking</button>
+        </div>
+
+        <section class="summary">
+            <div class="summary-card">
+                <div class="card-icon text-sky">📅</div>
+                <h3>Pending Bookings</h3>
+                <div class="number text-sky" id="kpiPending">0</div>
+            </div>
+            <div class="summary-card">
+                <div class="card-icon text-emerald">✅</div>
+                <h3>Confirmed Bookings</h3>
+                <div class="number text-emerald" id="kpiConfirmed">0</div>
+            </div>
+        </section>
+
+        <div class="section-heading" style="margin-top: 40px; margin-bottom: 10px;">
+            <h2 style="font-size: 24px; font-weight: 600; color: #fff;">Recent Booking Requests</h2>
+        </div>
+
+        <div class="table-card">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Booking ID</th>
+                        <th>User ID</th>
+                        <th>Vehicle ID</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="bookingTableBody">
+                    <tr><td colspan="7" style="text-align: center; padding: 40px; color: #94a3b8;">Loading bookings...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Create Booking Modal -->
+    <div class="modal" id="bookingModal">
+        <div class="modal-content">
+            <h3>New Booking</h3>
+            <form id="bookingForm">
+                <div class="form-group">
+                    <label>Vehicle</label>
+                    <select id="bookingVehicleId" required>
+                        <option value="" disabled selected>Select a vehicle...</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Start Date</label>
+                    <input type="date" id="bookingStartDate" required min="">
+                </div>
+                <div class="form-group">
+                    <label>End Date</label>
+                    <input type="date" id="bookingEndDate" required min="">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" onclick="closeBookingModal()">Cancel</button>
+                    <button type="submit" class="btn-primary">Create Booking</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../../../../../../Downloads/JCB-Fleet-Management-System%20(2)/JCB-Fleet-Management-System/src/main/resources/static/api.js"></script>
+    <script src="booking.js"></script>
+    <script src="../../../../../../Downloads/JCB-Fleet-Management-System%20(2)/JCB-Fleet-Management-System/src/main/resources/static/nav.js"></script>
+    <script>
+        // Set minimum dates to today
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('bookingStartDate').min = today;
+        document.getElementById('bookingEndDate').min = today;
+    </script>
+</body>
+</html>

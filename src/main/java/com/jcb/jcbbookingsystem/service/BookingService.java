@@ -96,6 +96,44 @@ public class BookingService {
                 .orElseThrow(() -> new ResourceNotFoundException("Booking not found with id: " + id));
     }
 
+    public BookingResponse getBookingById(Long id) {
+        return toResponse(findEntity(id));
+    }
+
+    public BookingResponse updateBooking(Long id, BookingRequest request) {
+        Booking booking = findEntity(id);
+
+        Vehicle vehicle = vehicleService.findEntity(request.getVehicleId());
+
+        if (request.getEndDate().isBefore(request.getStartDate())) {
+            throw new ConflictException("End date cannot be before start date");
+        }
+
+        // Checking overlap excluding current booking
+        List<Booking> overlapping = bookingRepository.findOverlappingBookings(
+                vehicle.getId(), request.getStartDate(), request.getEndDate());
+
+        boolean hasOverlap = overlapping.stream().anyMatch(b -> !b.getId().equals(id));
+        if (hasOverlap) {
+            throw new ConflictException("Vehicle is already booked for the selected dates");
+        }
+
+        long days = ChronoUnit.DAYS.between(request.getStartDate(), request.getEndDate()) + 1;
+        BigDecimal totalPrice = vehicle.getPricePerDay().multiply(BigDecimal.valueOf(days));
+
+        booking.setVehicle(vehicle);
+        booking.setStartDate(request.getStartDate());
+        booking.setEndDate(request.getEndDate());
+        booking.setTotalPrice(totalPrice);
+
+        return toResponse(bookingRepository.save(booking));
+    }
+
+    public void deleteBooking(Long id) {
+        Booking booking = findEntity(id);
+        bookingRepository.delete(booking);
+    }
+
     private BookingResponse toResponse(Booking b) {
         return BookingResponse.builder()
                 .id(b.getId())
