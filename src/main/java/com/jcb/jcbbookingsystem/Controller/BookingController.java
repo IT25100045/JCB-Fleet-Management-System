@@ -1,4 +1,4 @@
-package com.jcb.jcbbookingsystem.Controller;
+package com.jcb.jcbbookingsystem.controller;
 
 import com.jcb.jcbbookingsystem.dto.BookingRequest;
 import com.jcb.jcbbookingsystem.dto.BookingResponse;
@@ -43,6 +43,22 @@ public class BookingController {
     @PutMapping("/{id}/cancel")
     public ResponseEntity<Void> cancel(Authentication auth, @PathVariable Long id) {
         bookingService.cancelBooking(auth.getName(), id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<BookingResponse> getById(@PathVariable Long id) {
+        return ResponseEntity.ok(bookingService.getBookingById(id));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<BookingResponse> update(@PathVariable Long id, @Valid @RequestBody BookingRequest request) {
+        return ResponseEntity.ok(bookingService.updateBooking(id, request));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        bookingService.deleteBooking(id);
         return ResponseEntity.noContent().build();
     }
 }
